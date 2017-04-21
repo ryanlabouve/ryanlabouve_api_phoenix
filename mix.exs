@@ -30,13 +30,17 @@ defmodule RyanlabouveApiPhoenix.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.2.1"},
-     {:phoenix_pubsub, "~> 1.0"},
-     {:phoenix_ecto, "~> 3.0"},
-     {:postgrex, ">= 0.0.0"},
-     {:gettext, "~> 0.11"},
+    [
      {:cors_plug, "~> 1.1"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:gettext, "~> 0.11"},
+     {:git_cli, "~> 0.2"},
+     {:phoenix, "~> 1.2.1"},
+     {:phoenix_ecto, "~> 3.0"},
+     {:phoenix_pubsub, "~> 1.0"},
+     {:poison, "~> 3.1", override: true},
+     {:postgrex, ">= 0.0.0"},
+    ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
