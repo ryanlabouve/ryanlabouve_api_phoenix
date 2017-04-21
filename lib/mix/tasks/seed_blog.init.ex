@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.SeedBlog.Init2 do
+defmodule Mix.Tasks.SeedBlog.Init do
   use Mix.Task
   require IEx
 
@@ -25,23 +25,25 @@ defmodule Mix.Tasks.SeedBlog.Init2 do
   def process_article(article) do
     # IEx.pry
     # Find or update articles
+    {:ok, html} = File.read("./ryanlabouve-articles/" <> article["content"])
     Article.changeset(%Article{}, %{
-      "content" => "test",
+      "content" => html,
       "date" => Ecto.Date.utc,
-      "description" => "Burner",
-      "slug" => "test",
-      "title" => "asdf",
+      "description" => article["description"],
+      "slug" => article["slug"],
+      "title" => article["title"],
     })
     |> Repo.insert!
   end
 
   def run(_) do
     IO.puts "Running"
+    ensure_started(RyanlabouveApiPhoenix.Repo, [])
 
-    # cleanup()
+    cleanup()
     clone_repo()
     {_, manifest} = read_manifest("./ryanlabouve-articles/manifest.json")
     Enum.each(manifest, fn(article) -> process_article(article) end)
-    # cleanup()
+    cleanup()
   end
 end
