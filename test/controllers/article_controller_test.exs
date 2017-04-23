@@ -1,19 +1,32 @@
 defmodule RyanlabouveApiPhoenix.ArticleControllerTest do
-  use ExUnit.Case, async: false
-  use Plug.Test
+  use RyanlabouveApiPhoenix.ConnCase
+
   alias RyanlabouveApiPhoenix.Article
-  alias RyanlabouveApiPhoenix.Repo
-  alias Ecto.Adapters.SQL
 
-  setup do
-    SQL.begin_test_transaction(Repo)
+  require IEx
 
-    on_exit fn ->
-      SQL.rollback_test_transaction(Repo)
-    end
+  @valid_attrs %{
+    content: "<h1>Title!</h1>",
+    date: Ecto.Date.utc,
+    description: "some content",
+    slug: "article-1",
+    title: "Sample Title",
+  }
+
+  @invalid_attrs %{}
+
+  setup %{conn: conn} do
+    conn =
+      conn
+      |> put_req_header("accept", "application/vnd.api+json")
+      |> put_req_header("content-type", "application/vnd.api+json")
+
+    {:ok, conn: conn}
   end
 
-  test "GET /article returns a list of all articles" do
-
+  test "lists all articles on index", %{conn: conn} do
+    conn = get conn, article_path(conn, :index)
+    # IEx.pry
+    assert json_response(conn, 200)["data"] == []
   end
 end
