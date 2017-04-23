@@ -11,6 +11,6 @@ defmodule RyanlabouveApiPhoenix.Router do
     pipe_through :api
 
 
-    resources "/articles", ArticlesController, only: [:index]
+    resources "/articles", ArticleController, only: [:index]
   end
 end
