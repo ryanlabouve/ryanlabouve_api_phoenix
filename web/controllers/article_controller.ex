@@ -4,6 +4,13 @@ defmodule RyanlabouveApiPhoenix.ArticleController do
 
   alias RyanlabouveApiPhoenix.Article
 
+  def index(conn, %{"filter" => %{"limit" => limit}}) do
+    query = from a in Article,
+      limit: ^limit
+    articles = Repo.all(query)
+    render(conn, "index.json", articles: articles)
+  end
+
   def index(conn, %{"filter" => %{"slug" => slug}}) do
     query = from a in Article,
       where: a.slug == ^slug
