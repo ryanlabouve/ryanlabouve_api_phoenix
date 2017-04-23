@@ -3,6 +3,7 @@ defmodule Mix.Tasks.SeedBlog.Init do
   require IEx
 
   import Mix.Ecto
+  import Ecto.Query
   alias RyanlabouveApiPhoenix.Repo
   alias RyanlabouveApiPhoenix.Article
 
@@ -23,17 +24,30 @@ defmodule Mix.Tasks.SeedBlog.Init do
   end
 
   def process_article(article) do
-    # IEx.pry
-    # Find or update articles
     {:ok, html} = File.read("./ryanlabouve-articles/" <> article["content"])
-    Article.changeset(%Article{}, %{
+
+    {:ok, date} = Ecto.Date.cast(article["date"])
+
+    changes = %{
       "content" => html,
-      "date" => Ecto.Date.utc,
+      "date" => date,
       "description" => article["description"],
       "slug" => article["slug"],
       "title" => article["title"],
-    })
-    |> Repo.insert!
+    }
+
+    slug = article["slug"]
+    query = from a in Article,
+      where: a.slug == ^slug
+
+    existing_article = Repo.one(query)
+    if existing_article do
+      Article.changeset(existing_article, changes)
+      |> Repo.update!
+    else
+      Article.changeset(%Article{}, changes)
+      |> Repo.insert!
+    end
   end
 
   def run(_) do
