@@ -26,7 +26,9 @@ defmodule RyanlabouveApiPhoenix.ArticleController do
   end
 
   def index(conn, _params) do
-    articles = Repo.all(Article)
+    query = from article in Article,
+              order_by: [desc: :date]
+    articles = Repo.all(query)
     render(conn, "index.json", articles: articles)
   end
 end
