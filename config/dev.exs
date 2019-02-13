@@ -24,7 +24,7 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :ryanlabouve_api_phoenix, RyanlabouveApiPhoenix.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "luckyrye",
+  username: "postgres",
   database: "ryanlabouve_api_phoenix_dev",
   hostname: "localhost",
   pool_size: 10
