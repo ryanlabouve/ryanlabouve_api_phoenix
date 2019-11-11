@@ -37,7 +37,7 @@ defmodule RyanlabouveApiPhoenix.Mixfile do
      {:git_cli, "~> 0.2"},
      {:ja_serializer, "~> 0.12.0"},
      {:phoenix, "~> 1.2.1"},
-     {:phoenix_ecto, "~> 3.0"},
+     {:phoenix_ecto, "~> 4.1"},
      {:phoenix_pubsub, "~> 1.0"},
      {:poison, "~> 3.1", override: true},
      {:postgrex, ">= 0.0.0"},
